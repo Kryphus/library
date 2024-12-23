@@ -1,5 +1,11 @@
 const myLibrary = [];
 
+const dialog = document.getElementById('bookDialog');
+const showButton = document.getElementById('addBookButton');
+const closeButton = document.getElementById('closeDialogButton');
+const bookForm = document.getElementById('bookForm');
+const bookGrid = document.getElementById('bookGrid');
+
 function Book(title, author, pages, isRead) {
     this.title = title;
     this.author = author;
@@ -8,25 +14,41 @@ function Book(title, author, pages, isRead) {
 }
 
 function addBookToLibrary(book) {
-    myLibrary.push(book)
+    myLibrary.push(book);
 }
 
-function displayAllBooks() {
-    for (let obj of myLibrary) {
-        console.table(obj)
-    }
+function displayBooks() {
+    bookGrid.innerHTML = '';
+    myLibrary.forEach((book, index) => {
+        const bookCard = document.createElement('div');
+        bookCard.classList.add('book-card');
+        bookCard.innerHTML = `
+        <h3>${book.title}</h3>
+        <p><strong>Author:</strong> ${book.author}</p>
+        <p><strong>Pages:</strong> ${book.pages}</p>
+        <p><strong>Read:</strong> ${book.isRead ? 'Yes' : 'No'}</p>
+        <button class="toggle-read" data-index="${index}">${book.isRead ? 'Mark as Unread' : 'Mark as Read'}</button>
+        <button class="remove-book" data-index="${index}">Remove</button>
+        `;
+        bookGrid.appendChild(bookCard);
+    });
+
+    document.querySelectorAll('.toggle-read').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const index = e.target.getAttribute('data-index');
+            myLibrary[index].isRead = !myLibrary[index].isRead;
+            displayBooks();
+        });
+    });
+
+    document.querySelectorAll('.remove-book').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const index = e.target.getAttribute('data-index');
+            myLibrary.splice(index, 1);
+            displayBooks();
+        });
+    });
 }
-
-Book.prototype.info = function () {
-    return `${this.title} by ${this.author}, ${this.pages} pages, ${this.isRead}`
-}   
-
-
-const dialog = document.getElementById('bookDialog');
-const showButton = document.getElementById('addBookButton')
-const closeButton = document.getElementById('closeDialogButton')
-const bookForm = document.getElementById('bookForm')
-const displayBooks = document.getElementById('displayButton')
 
 showButton.addEventListener('click', () => {
     dialog.showModal();
@@ -37,26 +59,22 @@ closeButton.addEventListener('click', () => {
     bookForm.reset();
 });
 
-displayBooks.addEventListener('click', () => {
-    displayAllBooks();
-})
-
 bookForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
     const title = document.getElementById('title').value;
     const author = document.getElementById('author').value;
-    const pages = document.getElementById('pages').value;
-    const isRead = document.getElementById('isRead').value;
+    const pages = parseInt(document.getElementById('pages').value, 10);
+    const isRead = document.getElementById('isRead').checked;
 
     const newBook = new Book(title, author, pages, isRead);
-    myLibrary.push(newBook);
+    addBookToLibrary(newBook);
+
+    bookForm.reset();
     dialog.close();
-})
+    displayBooks();
+});
 
-
-
-
-
-
-
+myLibrary.push(new Book('The Hobbit', 'J.R.R. Tolkien', 310, true));
+myLibrary.push(new Book('1984', 'George Orwell', 328, false));
+displayBooks();

@@ -1,0 +1,230 @@
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    height: 10vh;
+    background-color: rgb(136, 27, 27);
+    color: rgb(224, 224, 224);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem 0;
+}
+
+
+
+dialog {
+    border: none;
+    border-radius: 8px;
+    padding: 2rem;
+    background-color: #fff;
+    box-shadow: 0 4px 24px rgba(136, 27, 27, 0.1);
+    max-width: 400px;
+    width: 90%;
+}
+
+dialog::backdrop {
+    background-color: rgba(136, 27, 27, 0.05);
+    backdrop-filter: blur(2px);
+}
+
+#bookForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+#bookForm div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+#bookForm label {
+    color: #4a4a4a;
+    font-weight: 500;
+}
+
+#bookForm input[type="text"],
+#bookForm input[type="number"] {
+    padding: 0.75rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+#bookForm input[type="text"]:focus,
+#bookForm input[type="number"]:focus {
+    outline: none;
+    border-color: rgb(136, 27, 27);
+    box-shadow: 0 0 0 3px rgba(136, 27, 27, 0.1);
+}
+
+#bookForm div:has(input[type="checkbox"]) {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+#bookForm button {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+#bookForm button[type="submit"] {
+    background-color: rgb(136, 27, 27);
+    color: white;
+}
+
+#bookForm button[type="submit"]:hover {
+    background-color: rgb(156, 37, 37);
+}
+
+#closeDialogButton {
+    background-color: #f5f5f5;
+    color: #666;
+}
+
+#closeDialogButton:hover {
+    background-color: #eaeaea;
+}
+
+#form-buttons-container {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 1rem;
+}
+
+/* grid container */
+
+#bookGrid {
+    margin: 0 10vw;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.book-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 1rem;
+    background: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.book-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.book-card p {
+    margin: 0.5rem 0;
+}
+
+.book-card button {
+    margin-top: 0.5rem;
+}
+
+/* ui verse button */
+.pushable {
+  position: relative;
+  background: transparent;
+  padding: 0px;
+  border: none;
+  cursor: pointer;
+  outline-offset: 4px;
+  outline-color: deeppink;
+  transition: filter 250ms;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: hsl(226, 25%, 69%);
+  border-radius: 8px;
+  filter: blur(2px);
+  will-change: transform;
+  transform: translateY(2px);
+  transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+
+.edge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  border-radius: 8px;
+  background: linear-gradient(
+    to right,
+    hsl(248, 39%, 39%) 0%,
+    hsl(248, 39%, 49%) 8%,
+    hsl(248, 39%, 39%) 92%,
+    hsl(248, 39%, 29%) 100%
+  );
+}
+
+.front {
+  display: block;
+  position: relative;
+  border-radius: 8px;
+  background: hsl(248, 53%, 58%);
+  padding: 16px 32px;
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 1rem;
+  transform: translateY(-4px);
+  transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+
+.pushable:hover {
+  filter: brightness(110%);
+}
+
+.pushable:hover .front {
+  transform: translateY(-6px);
+  transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+}
+
+.pushable:active .front {
+  transform: translateY(-2px);
+  transition: transform 34ms;
+}
+
+.pushable:hover .shadow {
+  transform: translateY(4px);
+  transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+}
+
+.pushable:active .shadow {
+  transform: translateY(1px);
+  transition: transform 34ms;
+}
+
+.pushable:focus:not(:focus-visible) {
+  outline: none;
+}
